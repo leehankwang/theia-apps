@@ -108,9 +108,6 @@ RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
 RUN adduser --disabled-password --gecos '' user
 ADD settings.json /home/user/.theia/
 
-RUN apt-get install sudo
-RUN adduser user sudo
-
 RUN chmod g+rw /home && \
     mkdir -p /home/project && \
     chown -R user:user /home/user && \
@@ -120,13 +117,13 @@ RUN chmod g+rw /home && \
 
 RUN mkdir /home/user/.npm-global
 RUN chown -R user:user /home/user/.npm-global
-ENV NPM_CONFIG_PREFIX /home/user/.npm-global
-ENV PATH=$PATH:/home/user/.npm-global/
+ENV NPM_CONFIG_PREFIX /home/user/.npm-global 
+RUN echo 'export PATH=~/.npm-global/bin:$PATH' >> /home/user/.profile
+
 
 # Theia application
 
 USER user
-RUN source /home/user/.profile
 WORKDIR /home/user
 ADD $version.package.json ./package.json
 
