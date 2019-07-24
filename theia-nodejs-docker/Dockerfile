@@ -116,7 +116,9 @@ RUN chmod g+rw /home && \
 # set npm global
 
 RUN mkdir /home/user/.npm-global
+RUN chown -R user:user /home/user/.npm-global
 ENV NPM_CONFIG_PREFIX /home/user/.npm-global 
+RUN echo 'export PATH=~/.npm-global/bin:$PATH' >> /home/user/.profile
 
 
 # Theia application
