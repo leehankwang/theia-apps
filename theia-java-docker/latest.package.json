@@ -3,7 +3,7 @@
     "theia": {
         "frontend": {
             "config": {
-                "applicationName": "Theia Java Example",
+                "applicationName": "Java Development Project",
                 "preferences": {
                     "files.enableTrash": false
                 }
@@ -11,19 +11,29 @@
         }
     },
     "dependencies": {
-        "@theia/file-search": "latest",
+        "@theia/editor-preview": "next",
+	"@theia/debug": "latest",
+        "@theia/debug-nodejs": "latest",
+        "@theia/editor": "latest",
+        "@theia/editorconfig": "latest",
+        "@theia/filesystem": "latest",
+        "@theia/file-search": "next",
+        "@theia/getting-started": "next",
         "@theia/git": "latest",
         "@theia/java": "latest",
         "@theia/json": "latest",
         "@theia/markers": "latest",
         "@theia/navigator": "latest",
         "@theia/outline-view": "latest",
+	"@theia/output": "latest",
         "@theia/preferences": "latest",
+	"@theia/preview": "latest",
         "@theia/search-in-workspace": "latest",
         "@theia/terminal": "latest",
         "@theia/textmate-grammars": "latest",
         "@theia/tslint": "latest",
         "@theia/typescript": "latest",
+	"@theia/workspace": "latest",
         "typescript": "latest"
     },
     "resolutions": {
