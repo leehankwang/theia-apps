@@ -14,13 +14,23 @@ RUN apt-get update && \
   apt-get update && apt-get install -y yarn && \
   rm -rf /var/lib/apt/lists/*
 # See : https://github.com/theia-ide/theia-apps/issues/34
-RUN adduser --disabled-password --gecos '' theia
+RUN adduser --disabled-password --gecos '' user
 RUN chmod g+rw /home && \
     mkdir -p /home/project && \
-    chown -R theia:theia /home/theia && \
-    chown -R theia:theia /home/project;
-WORKDIR /home/theia
-USER theia
+    chown -R user:user /home/user && \
+    chown -R user:user /home/project;
+
+# set npm global
+
+RUN mkdir /home/user/.npm-global
+RUN chown -R user:user /home/user/.npm-global
+ENV NPM_CONFIG_PREFIX /home/user/.npm-global 
+RUN echo 'export PATH=~/.npm-global/bin:$PATH' >> /home/user/.profile
+
+WORKDIR /home/user
+USER user
+
+RUN source /home/user/.profile
 
 ARG version=latest
 ADD $version.package.json ./package.json

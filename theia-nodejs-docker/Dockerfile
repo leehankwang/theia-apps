@@ -124,6 +124,7 @@ RUN echo 'export PATH=~/.npm-global/bin:$PATH' >> /home/user/.profile
 # Theia application
 
 USER user
+RUN source /home/user/.profile
 WORKDIR /home/user
 ADD $version.package.json ./package.json
 
