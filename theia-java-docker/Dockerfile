@@ -20,9 +20,6 @@ RUN chmod g+rw /home && \
     chown -R user:user /home/user && \
     chown -R user:user /home/project;
 
-RUN apt-get update && apt-get install -y sudo
-RUN echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
 # set npm global
 
 RUN mkdir /home/user/.npm-global
@@ -33,7 +30,7 @@ RUN echo 'export PATH=~/.npm-global/bin:$PATH' >> /home/user/.profile
 WORKDIR /home/user
 USER user
 
-# RUN source /home/user/.profile
+RUN source /home/user/.profile
 
 ARG version=latest
 ADD $version.package.json ./package.json
