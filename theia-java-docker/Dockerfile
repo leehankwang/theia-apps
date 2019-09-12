@@ -20,6 +20,9 @@ RUN chmod g+rw /home && \
     chown -R user:user /home/user && \
     chown -R user:user /home/project;
 
+RUN apt-get install sudo
+RUN adduser user sudo
+
 # set npm global
 
 RUN mkdir /home/user/.npm-global
