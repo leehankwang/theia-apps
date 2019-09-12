@@ -24,7 +24,7 @@ RUN apt-get update && \
                        python \
                        wget \
                        xz-utils && \
-    rm -rf /var/lib/apt/lists/* 
+    rm -rf /var/lib/apt/lists/*
 
 #Install node and yarn
 #From: https://github.com/nodejs/docker-node/blob/6b8d86d6ad59e0d1e7a94cec2e909cad137a028f/8/Dockerfile
@@ -97,27 +97,32 @@ RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" > /etc/apt/sources.list.d/llvm.list && \
     apt-get update && \
     apt-get install -y cmake \
-                       clang-tools-10 \
-                       clangd-10 \
-                       clang-tidy-10 \
+                       clang-tools-9 \
+                       clang-tidy-9 \
                        gdb && \
-    ln -s /usr/bin/clangd-10 /usr/bin/clangd && \
-    ln -s /usr/bin/clang-tidy-10 /usr/bin/clang-tidy && \
-    rm -rf /var/lib/apt/lists/* 
+    ln -s /usr/bin/clangd-9 /usr/bin/clangd && \
+    ln -s /usr/bin/clang-tidy-9 /usr/bin/clang-tidy && \
+    rm -rf /var/lib/apt/lists/*
 
 ## User account
-RUN adduser --disabled-password --gecos '' theia
-ADD settings.json /home/theia/.theia/
+RUN adduser --disabled-password --gecos '' user
+ADD settings.json /home/user/.theia/
 
 RUN chmod g+rw /home && \
     mkdir -p /home/project && \
-    chown -R theia:theia /home/theia && \
-    chown -R theia:theia /home/project;
+    chown -R user:user /home/user && \
+    chown -R user:user /home/project;
+
+# set npm global
+
+RUN mkdir /home/user/.npm-global
+ENV NPM_CONFIG_PREFIX /home/user/.npm-global 
+
 
 # Theia application
 
-USER theia
-WORKDIR /home/theia
+USER user
+WORKDIR /home/user
 ADD $version.package.json ./package.json
 
 RUN if [ "$strip" = "true" ]; then \
@@ -138,5 +143,5 @@ yarn --cache-folder ./ycache && rm -rf ./ycache && \
 EXPOSE 3000
 ENV SHELL /bin/bash
 
-ENTRYPOINT [ "node", "/home/theia/src-gen/backend/main.js", "/home/project", "--hostname=0.0.0.0" ]
-# ENTRYPOINT [ "yarn", "theia", "start", "/home/project", "--hostname=0.0.0.0" ] 
+ENTRYPOINT [ "node", "/home/user/src-gen/backend/main.js", "/home/project", "--hostname=0.0.0.0" ]
+# ENTRYPOINT [ "yarn", "theia", "start", "/home/project", "--hostname=0.0.0.0" ]
