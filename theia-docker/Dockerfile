@@ -16,6 +16,7 @@ RUN yarn --pure-lockfile && \
     yarn cache clean
 
 FROM node:${NODE_VERSION}-alpine
+RUN apk add --no-cache make gcc g++ python
 # See : https://github.com/theia-ide/theia-apps/issues/34
 RUN addgroup user && \
     adduser -G user -s /bin/sh -D user;
