@@ -32,7 +32,6 @@ RUN chown -R user:user /home/user/.npm-global
 ENV NPM_CONFIG_PREFIX /home/user/.npm-global
 ENV PATH=$PATH:/home/user/.npm-global/bin/
 
-RUN apk add --no-cache chromium
 RUN apk add --no-cache git openssh bash
 RUN apk add --no-cache sudo
 RUN echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
