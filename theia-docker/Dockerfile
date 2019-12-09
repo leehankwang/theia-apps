@@ -17,7 +17,6 @@ RUN yarn --pure-lockfile && \
 
 FROM node:${NODE_VERSION}-alpine
 RUN apk add --no-cache make gcc g++ python
-RUN apk add --no-cache chromium
 # See : https://github.com/theia-ide/theia-apps/issues/34
 RUN addgroup user && \
     adduser -G user -s /bin/sh -D user;
@@ -33,6 +32,7 @@ RUN chown -R user:user /home/user/.npm-global
 ENV NPM_CONFIG_PREFIX /home/user/.npm-global
 ENV PATH=$PATH:/home/user/.npm-global/bin/
 
+RUN apk add --no-cache chromium
 RUN apk add --no-cache git openssh bash
 RUN apk add --no-cache sudo
 RUN echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
