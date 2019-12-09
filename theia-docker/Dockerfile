@@ -17,7 +17,7 @@ RUN yarn --pure-lockfile && \
 
 FROM node:${NODE_VERSION}-alpine
 RUN apk add --no-cache make gcc g++ python
-RUN apk add --no-cache chromium-browser
+RUN apk add --no-cache chromium
 # See : https://github.com/theia-ide/theia-apps/issues/34
 RUN addgroup user && \
     adduser -G user -s /bin/sh -D user;
